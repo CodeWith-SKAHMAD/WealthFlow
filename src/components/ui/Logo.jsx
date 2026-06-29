@@ -9,7 +9,7 @@ export default function Logo({ size = 'md', showText = true, className = '' }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <img
-        src="/logo-icon.png"
+        src={`${import.meta.env.BASE_URL}logo-icon.png`}
         alt="WealthFlow"
         width={s.icon}
         height={s.icon}
