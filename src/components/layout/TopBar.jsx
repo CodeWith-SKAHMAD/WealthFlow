@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Sun, Moon, ArrowLeftRight, Menu, User, LogOut } from 'lucide-react'
+import { Sun, Moon, ArrowLeftRight, User, LogOut } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { getRate } from '../../lib/currency'
+import { fetchProfile } from '../../lib/db'
 import Logo from '../ui/Logo'
 
-export default function TopBar({ onMenuClick }) {
+export default function TopBar() {
   const { theme, toggleTheme } = useTheme()
   const { signOut, user } = useAuth()
   const navigate = useNavigate()
   const [rate, setRate] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState(null)
 
   useEffect(() => {
     let active = true
@@ -23,19 +25,23 @@ export default function TopBar({ onMenuClick }) {
     }
   }, [])
 
+  useEffect(() => {
+    if (!user) return
+    let active = true
+    fetchProfile(user.id)
+      .then((p) => active && setAvatarUrl(p?.avatar_url || null))
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [user])
+
   return (
     <div className="flex items-center justify-between gap-3 mb-5">
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onMenuClick}
-          className="lg:hidden p-2 rounded-xl glass-inset hover:bg-white/10"
-        >
-          <Menu size={18} />
-        </button>
-        <div className="lg:hidden">
-          <Logo size="sm" showText={false} />
-        </div>
+      <div className="lg:hidden">
+        <Logo size="sm" showText={false} />
       </div>
+      <div className="hidden lg:block" />
 
       <div className="flex items-center gap-2.5">
         <button
@@ -60,9 +66,15 @@ export default function TopBar({ onMenuClick }) {
         <div className="relative">
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="w-10 h-10 rounded-xl btn-3d flex items-center justify-center text-white font-semibold text-sm"
+            className="w-10 h-10 rounded-xl btn-3d flex items-center justify-center text-white font-semibold text-sm overflow-hidden"
           >
-            {user?.email ? user.email[0].toUpperCase() : <User size={16} />}
+            {avatarUrl ? (
+              <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+            ) : user?.email ? (
+              user.email[0].toUpperCase()
+            ) : (
+              <User size={16} />
+            )}
           </button>
           {menuOpen && (
             <>

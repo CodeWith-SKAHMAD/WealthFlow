@@ -66,7 +66,7 @@ export default function MarketSessionBar() {
         </div>
       </div>
 
-      <div className="relative h-9 rounded-lg overflow-hidden bg-black/20">
+      <div className="relative h-11 rounded-lg overflow-hidden bg-black/30 border border-white/5">
         {SESSIONS.map((session) => {
           const spans = sessionToLocalSpan(session, now)
           const isActive = active.some((a) => a.key === session.key)
@@ -78,28 +78,28 @@ export default function MarketSessionBar() {
                 left: `${span.startPct}%`,
                 width: `${span.endPct - span.startPct}%`,
                 backgroundColor: session.color,
-                opacity: isActive ? 0.55 : 0.22,
+                opacity: isActive ? 0.88 : 0.45,
               }}
             >
               <span
-                className="text-[10px] font-bold uppercase tracking-wide truncate px-1"
-                style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.65)' }}
+                className="text-[11px] font-bold uppercase tracking-wide truncate px-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
+                style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.92)' }}
               >
-                {span.endPct - span.startPct > 8 ? session.label : ''}
+                {span.endPct - span.startPct > 7 ? session.label : ''}
               </span>
             </div>
           ))
         })}
 
         <div
-          className="absolute top-0 h-full w-[2px] bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] z-10"
+          className="absolute top-0 h-full w-[2.5px] bg-white shadow-[0_0_10px_rgba(255,255,255,0.9)] z-10"
           style={{ left: `${nowPct}%` }}
         >
-          <div className="absolute -top-1 -left-[3px] w-2 h-2 rounded-full bg-white" />
+          <div className="absolute -top-1 -left-[3.5px] w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.9)]" />
         </div>
       </div>
 
-      <div className="flex justify-between text-[10px] opacity-35 font-medium mt-1 px-0.5">
+      <div className="flex justify-between text-[10px] opacity-55 font-semibold mt-1.5 px-0.5">
         {hourMarks.map((label) => (
           <span key={label}>{label}</span>
         ))}
