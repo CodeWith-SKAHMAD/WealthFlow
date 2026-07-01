@@ -19,7 +19,7 @@ export default function BottomNavBar() {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass !rounded-none border-t border-white/10 px-1 pt-1.5 pb-[calc(0.4rem+env(safe-area-inset-bottom))]">
+      <nav data-wf-bottom-nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass !rounded-none border-t border-white/10 px-1 pt-1.5 pb-[calc(0.4rem+env(safe-area-inset-bottom))]">
         <div className="flex items-stretch justify-between">
           {TABS.map((tab) => (
             <NavLink

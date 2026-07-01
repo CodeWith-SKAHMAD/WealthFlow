@@ -37,7 +37,7 @@ export const NAV_ITEMS = [
  */
 export default function Sidebar() {
   return (
-    <aside className="hidden lg:flex lg:sticky lg:top-0 h-screen w-72 shrink-0 flex-col gap-1 p-4 glass !rounded-none lg:!rounded-r-3xl border-r border-white/5">
+    <aside data-wf-desktop-sidebar className="hidden lg:flex lg:sticky lg:top-0 h-screen w-72 shrink-0 flex-col gap-1 p-4 glass !rounded-none lg:!rounded-r-3xl border-r border-white/5">
       <div className="flex items-center px-2 py-3 mb-2">
         <Logo size="sm" />
       </div>
